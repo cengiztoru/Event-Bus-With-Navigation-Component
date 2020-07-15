@@ -6,15 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.cengiztoru.samplenavigationexample.R
 import com.cengiztoru.samplenavigationexample.data.User
 import kotlinx.android.synthetic.main.fragment_login.*
+import org.greenrobot.eventbus.EventBus
 
-class LoginFragment : Fragment(), View.OnClickListener {
+class LoginFragment : BaseFragment(), View.OnClickListener {
 
     lateinit var navController: NavController
 
@@ -39,21 +38,14 @@ class LoginFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btnLogin -> {
-                //PASS DATA WITH SAFE ARGS
-                //if you add dependencies but Directions library not added rebuild project
-                if (!TextUtils.isEmpty(etMail.text.toString()) && !TextUtils.isEmpty(etPassword.text.toString())) {
 
+                if (!TextUtils.isEmpty(etMail.text.toString()) && !TextUtils.isEmpty(etPassword.text.toString())) {
                     val user = getUserData()
-//                    val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment(5) //ide will give error.
-                    val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment(user)
-                    navController.navigate(action)
+                    EventBus.getDefault().postSticky(user)
+                    navController.navigate(R.id.action_loginFragment_to_homeFragment)
 
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "PLEASE ENTER YOUR EMAIL AND PASSWORD",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showToast("PLEASE ENTER YOUR EMAIL AND PASSWORD")
                 }
             }
 

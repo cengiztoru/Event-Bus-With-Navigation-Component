@@ -45,4 +45,8 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+    //EventBus
+    implementation 'org.greenrobot:eventbus:3.2.0'
+
+
 }

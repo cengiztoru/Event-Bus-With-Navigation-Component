@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.cengiztoru.samplenavigationexample.R
 
-class SignupFragment : Fragment(), View.OnClickListener {
+class SignupFragment : BaseFragment(), View.OnClickListener {
 
     lateinit var navController: NavController
 
@@ -43,15 +42,10 @@ class SignupFragment : Fragment(), View.OnClickListener {
     }
 
     private fun returnLoginScreen() {
-        //You can return login screen by 3 way
-//        navController.navigate(R.id.action_signupFragment_to_loginFragment)
 
-//                navController.popBackStack()  //For this project, this code not working. When this code run nothing will happen.
-        //Because before opening this screen we cleared backstack in navigation graph
-        //by popUpToInclusive and popupTO attributes
+        navController.popBackStack()
 
-//                activity!!.onBackPressed()    //For this project, this code not working. When this code run app will close.
-        //Because navigation handle backpressinng action. So if backstack is empty, navigation close the app.
+//        activity!!.onBackPressed()
     }
 
 }

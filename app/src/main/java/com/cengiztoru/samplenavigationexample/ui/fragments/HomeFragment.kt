@@ -5,22 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.cengiztoru.samplenavigationexample.R
 import com.cengiztoru.samplenavigationexample.data.User
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.greenrobot.eventbus.Subscribe
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseEventBusFragment() {
 
     lateinit var user: User
     lateinit var navController: NavController
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        user = arguments!!.getParcelable<User>("user")!!
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,11 +27,18 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        message.text = "Welcome ${user.name} ${user.surname} \n ${user.email}"
         navController = Navigation.findNavController(view)
         view.findViewById<Button>(R.id.btnLogout).setOnClickListener {
             navController.navigate(R.id.action_homeFragment_to_loginFragment)
         }
+    }
+
+    @Subscribe(sticky = true)
+    override fun onUserLogged(user: User) {
+        this.user = user
+        showToast("HOME FRAGMENT" + this.user.email)
+        message.text = "Welcome ${user.name} ${user.surname} \n ${user.email}"
+
     }
 
 }

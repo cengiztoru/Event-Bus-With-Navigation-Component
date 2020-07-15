@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.cengiztoru.samplenavigationexample.R
 import com.cengiztoru.samplenavigationexample.data.User
+import org.greenrobot.eventbus.EventBus
 import kotlin.random.Random
 
-class SplashFragment : Fragment() {
+class SplashFragment : BaseFragment() {
 
     lateinit var navController: NavController
 
@@ -37,9 +37,11 @@ class SplashFragment : Fragment() {
             }
             true -> {
                 //PASS DATA WITHOUT SAFE ARGS, PASS DATA BY SIMPLE BUNDLE
-                val bundle = Bundle()
-                bundle.putParcelable("user", getUserData())
-                navController.navigate(R.id.action_splashFragment_to_homeFragment, bundle)
+//                val bundle = Bundle()
+//                bundle.putParcelable("user", getUserData())
+//                navController.navigate(R.id.action_splashFragment_to_homeFragment, bundle)
+                EventBus.getDefault().postSticky(getUserData())
+                navController.navigate(R.id.action_splashFragment_to_homeFragment)
 
             }
         }
